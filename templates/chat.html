@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Чат с {{ receiver.username }} - Мессенджер{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <div class="chat-header">
+        <h2>Чат с {{ receiver.username }}</h2>
+        <a href="{{ url_for('users_list') }}" class="btn btn-secondary">← Назад</a>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+        {% for message in messages %}
+        <div class="message {% if message.sender_id == session.user_id %}message-sent{% else %}message-received{% endif %}">
+            <div class="message-content">
+                <p>{{ message.content }}</p>
+                <span class="message-time">{{ message.timestamp.strftime('%H:%M %d.%m.%Y') }}</span>
+            </div>
+            <div class="message-actions">
+                <a href="{{ url_for('delete_message', message_id=message.id) }}" 
+                   class="btn-delete" 
+                   onclick="return confirm('Удалить сообщение?')">×</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="chat-input">
+        <form method="POST" action="{{ url_for('send_message') }}">
+            <input type="hidden" name="receiver_id" value="{{ receiver.id }}">
+            <div class="input-group">
+                <input type="text" name="content" placeholder="Введите сообщение..." required>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Прокрутка к последнему сообщению
+    window.onload = function() {
+        const chatMessages = document.getElementById('chatMessages');
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    };
+</script>
+{% endblock %}

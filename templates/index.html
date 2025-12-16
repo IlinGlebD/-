@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>Добро пожаловать в Мессенджер</h1>
+        <p>Общайтесь с друзьями и коллегами в реальном времени</p>
+        
+        {% if not session.user_id %}
+        <div class="hero-buttons">
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Войти</a>
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">Зарегистрироваться</a>
+        </div>
+        {% else %}
+        <div class="hero-buttons">
+            {% if session.is_admin %}
+                <a href="{{ url_for('admin_panel') }}" class="btn btn-primary">Панель администратора</a>
+            {% else %}
+                <a href="{{ url_for('users_list') }}" class="btn btn-primary">Начать общение</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

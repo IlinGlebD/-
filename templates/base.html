@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Мессенджер{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="{{ url_for('index') }}">Мессенджер</a>
+            </div>
+            <div class="nav-links">
+                {% if session.user_id %}
+                    <span>Привет, {{ session.username }}</span>
+                    {% if session.is_admin %}
+                        <a href="{{ url_for('admin_panel') }}">Панель администратора</a>
+                    {% else %}
+                        <a href="{{ url_for('users_list') }}">Пользователи</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}">Выйти</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Войти</a>
+                    <a href="{{ url_for('register') }}">Регистрация</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
