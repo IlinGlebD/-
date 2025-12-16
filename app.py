@@ -226,8 +226,3 @@ def edit_user(user_id):
             flash('Данные пользователя обновлены')
 
     return redirect(url_for('admin_panel'))
-
-
-if __name__ == '__main__':
-    create_admin()
-    app.run(debug=True)

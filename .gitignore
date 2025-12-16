@@ -1,3 +1,5 @@
+__pycache__
+
 instance/
 .webassets-cache
 .env
@@ -41,3 +43,4 @@ profile_default/
 ipython_config.py
 
 .db
+
