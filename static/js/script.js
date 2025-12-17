@@ -1,5 +1,3 @@
-// Базовая функциональность JavaScript
-
 document.addEventListener('DOMContentLoaded', function() {
     // Автофокус на поле ввода в формах
     const forms = document.querySelectorAll('form');
@@ -19,17 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Плавная прокрутка
-    const smoothScroll = (target) => {
-        const element = document.querySelector(target);
-        if (element) {
-            element.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    };
 
     // Обработка отправки форм с валидацией
     forms.forEach(form => {
@@ -60,11 +47,4 @@ function scrollToBottom() {
     if (chatMessages) {
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-}
-
-// Автоматическое обновление чата (можно добавить позже с WebSockets)
-function startChatAutoRefresh(chatId) {
-    setInterval(() => {
-        // Здесь можно добавить AJAX-запрос для обновления сообщений
-    }, 5000);
 }

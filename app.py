@@ -123,7 +123,7 @@ def users_list():
     if session.get('is_admin'):
         return redirect(url_for('admin_panel'))
 
-    users = User.query.filter(User.id != session['user_id']).all()
+    users = User.query.filter(User.id != session['user_id']).all() # исключение себя из списка
     return render_template('users.html', users=users)
 
 
