@@ -1,10 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
+import os
 from models import db, User, Message
 from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your-secret-key-here'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(BASE_DIR, 'instance', 'database.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -20,6 +23,9 @@ def create_admin():
             admin.set_password('admin123')
             db.session.add(admin)
             db.session.commit()
+
+
+create_admin()
 
 
 @app.before_request
